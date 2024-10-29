@@ -89,6 +89,21 @@ class CalculatorTest {
     }
 
 
-    //TODO hier weitere Tests erstellen
+   @Test
+   @DisplayName(value = "should display the product of the numbers")
+    void testProductOfNumbers() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(6);
+        calc.pressDigitKey(0);
+        calc.pressBinaryOperationKey("x");
+        calc.pressDigitKey(4);
+        calc.pressEqualsKey();
+
+        String expected = "240";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+   }
 }
 
