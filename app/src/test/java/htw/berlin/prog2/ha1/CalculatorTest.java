@@ -105,5 +105,24 @@ class CalculatorTest {
 
         assertEquals(expected, actual);
    }
+
+    @Test
+    @DisplayName("should display correct result when equals is pressed multiple times after subtraction")
+    void testRepeatedEqualsSubtraction() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(5);
+        calc.pressBinaryOperationKey("-");
+        calc.pressDigitKey(1);
+        calc.pressEqualsKey();  // Ergebnis sollte 4 sein
+        calc.pressEqualsKey();  // Ergebnis sollte 3 sein
+        calc.pressEqualsKey();  // Ergebnis sollte 2 sein
+
+        String expected = "2"; // Erwartetes Ergebnis nach dreimaligem Drücken von "=": 5 - 1 - 1 - 1 = 2
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+
 }
 
