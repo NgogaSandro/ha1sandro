@@ -124,5 +124,20 @@ class CalculatorTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    @DisplayName("should change the sign of the number when pressing the negation key")
+    void testNegationKey() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(5);
+        calc.pressDotKey();
+        calc.pressDigitKey(5);
+        calc.pressUnaryOperationKey("±");
+
+        String expected = "-5.5"; // Erwartet: Die Zahl sollte das Vorzeichen wechseln
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
 }
 
