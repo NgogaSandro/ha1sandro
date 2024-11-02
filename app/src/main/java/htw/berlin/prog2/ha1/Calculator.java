@@ -9,11 +9,8 @@ package htw.berlin.prog2.ha1;
 public class Calculator {
 
     private String screen = "0";
-
     private Double latestValue = 0.0;
-
     private String latestOperation = "";
-
     private Double lastOperand;
     private String lastOperator;
 
@@ -65,6 +62,8 @@ public class Calculator {
     public void pressBinaryOperationKey(String operation)  {
         latestValue = Double.parseDouble(screen);
         latestOperation = operation;
+        lastOperand = null;
+        lastOperator = latestOperation;
     }
 
     /**
@@ -78,15 +77,15 @@ public class Calculator {
         latestValue = Double.parseDouble(screen);
         latestOperation = operation;
         var result = switch(operation) {
-            case "√" -> Math.sqrt(Double.parseDouble(screen));
-            case "%" -> Double.parseDouble(screen) / 100;
-            case "1/x" -> 1 / Double.parseDouble(screen);
+            case "√" -> Math.sqrt(latestValue);
+            case "%" -> latestValue/ 100;
+            case "1/x" -> 1 / latestValue;
+            case "±" -> -latestValue;
             default -> throw new IllegalArgumentException();
         };
         screen = Double.toString(result);
         if(screen.equals("NaN")) screen = "Error";
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
-
     }
 
     /**
@@ -121,18 +120,15 @@ public class Calculator {
      * und das Ergebnis direkt angezeigt.
      */
     public void pressEqualsKey() {
-
         // Falls keine gültige Operation vorhanden ist, nichts tun
-        if (latestOperation == null) {
+        if (latestOperation == null && lastOperator == null) {
             return;
         }
-
         // Letzten Operanden und Operator speichern, falls noch nicht gesetzt
-        if (lastOperand == null || lastOperator == null) {
+        if (lastOperand == null) {
             lastOperand = Double.parseDouble(screen);
             lastOperator = latestOperation;
         }
-
         var result = switch(lastOperator) {
             case "+" -> latestValue + lastOperand;
             case "-" -> latestValue - lastOperand;
